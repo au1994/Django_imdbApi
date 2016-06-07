@@ -1,8 +1,10 @@
-from bs4 import BeautifulSoup
 import logging
-import requests
 import sys
 import traceback
+
+import requests
+
+from bs4 import BeautifulSoup
 
 
 def get_search_results(movie):
@@ -22,27 +24,27 @@ def get_search_results(movie):
 
     if len(movies) == 0:
         json_object = {}
-        json_object['Error'] = "No results found"
+        json_object['error'] = "No results found"
         return json_object
 
     for item in movies:
         if item is not None:
             title = item.get_text().strip()
             url = item.find("a").get("href")
-            Id = url[7:16]
+            movie_id = url[7:16]
         url = "http://www.imdb.com" + url
         json_object = {}
-        json_object['Title'] = title
-        json_object['Url'] = url
-        json_object['Id'] = Id
+        json_object['title'] = title
+        json_object['url'] = url
+        json_object['id'] = movie_id
         json_array.append(json_object)
 
     return json_array
 
 
-def get_movie_results(Id):
+def get_movie_results(movie_id):
 
-    url = "http://www.imdb.com/title/" + Id + "/?ref_=fn_al_tt_1"
+    url = "http://www.imdb.com/title/" + movie_id + "/?ref_=fn_al_tt_1"
     try:
         r = requests.get(url)
     except requests.exceptions.RequestException as e:
@@ -56,7 +58,7 @@ def get_movie_results(Id):
     if movie_details is None:
         print "No results found"
         json_object = {}
-        json_object['Error'] = "No results found"
+        json_object['error'] = "No results found"
         return json_object
 
     description = movie_details.find("div", {"class": "summary_text"})
@@ -67,52 +69,50 @@ def get_movie_results(Id):
     title_details = soup.find("div", {"class": "title_wrapper"})
     title = title_details.find("h1", {"itemprop": "name"})
     duration = title_details.find("time", {"itemprop": "duration"})
-    release_date = title_details.find(
-        "meta",
-        {"itemprop": "datePublished"}
-    )
+    release_date = title_details.find("meta",
+                                      {"itemprop": "datePublished"})
 
     genre = title_details.find_all("span", {"itemprop": "genre"})
 
     json_object = {}
 
     if title is not None:
-        json_object['Title'] = title.get_text().strip()
+        json_object['title'] = title.get_text().strip()
 
     if duration is not None:
-        json_object['Duration'] = duration.get_text().strip()
+        json_object['duration'] = duration.get_text().strip()
 
     if release_date is not None:
-        json_object['ReleaseDate'] = release_date['content']
+        json_object['releaseDate'] = release_date['content']
 
     if description is not None:
-        json_object['Description'] = description.get_text().strip()
+        json_object['description'] = description.get_text().strip()
 
     if director is not None:
         directors = ""
         for item in director:
             directors = directors + item.get_text().strip() + ", "
-        json_object['Directors'] = directors
+        json_object['director'] = directors
 
     if genre is not None:
         genres = ""
         for item in genre:
             genres = genres + item.get_text().strip() + " "
-        json_object['Genre'] = genres
+        json_object['genre'] = genres
 
     if writer is not None:
         writers = ""
         for item in writer:
             writers = writers + item.get_text().strip() + " "
-        json_object['Writer'] = writers
+        json_object['writer'] = writers
 
     if actor is not None:
         actors = ""
         for item in actor:
             actors = actors + item.get_text().strip() + " "
-        json_object['Actors'] = actors
+        json_object['actors'] = actors
 
     if rating is not None:
-        json_object['Rating'] = rating.get_text().strip()
+        json_object['rating'] = rating.get_text().strip()
 
     return json_object

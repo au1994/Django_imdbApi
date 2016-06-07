@@ -1,4 +1,5 @@
 # Django_imdbApi
 
-Search api - http://192.168.1.77:8080/imdb/search?q=fight&page=3 <br />
-Exact api - http://192.168.1.77:8080/imdb/exact?q=tt2477230
+Search api - http://au1994-heroku.herokuapp.com/movies/search?q=fight club
+
+Get api - http://au1994-heroku.herokuapp.com/movies/get/tt0137523
