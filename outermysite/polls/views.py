@@ -11,7 +11,7 @@ import imdbScraper
 
 
 # Create your views here.
-def searchMovie(request):
+def search_movie(request):
 
     movie = request.GET.get('q', '')
     movie_list = imdbScraper.getSearchResults(movie)
@@ -33,7 +33,7 @@ def searchMovie(request):
     return HttpResponse(data, content_type='application/json')
 
 
-def exactMovie(request):
+def exact_movie(request):
 
     Id = request.GET.get('q', '')
     data = imdbScraper.getMovieResults(Id)

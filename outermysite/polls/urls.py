@@ -3,6 +3,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-        url(r'^search/', views.searchMovie, name = 'searchMovie'),
-        url(r'^exact/',views.exactMovie, name = 'exactMovie'),
+        url(r'^search/', views.search_movie, name='search_movie'),
+        url(r'^exact/', views.exact_movie, name='exact_movie'),
         ]

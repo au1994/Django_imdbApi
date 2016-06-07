@@ -4,6 +4,7 @@ import traceback
 from bs4 import BeautifulSoup
 import logging
 
+
 def getSearchResults(movie):
 
     url = "http://www.imdb.com/find?s=tt&q=" + movie
@@ -11,8 +12,8 @@ def getSearchResults(movie):
     try:
         r = requests.get(url)
     except requests.exceptions.RequestException as e:
-        logging.info(e) 
-        raise SystemExit(e)
+        logging.info(e)
+        traceback.print_exc(e)
 
     soup = BeautifulSoup(r.content, "html.parser")
     movies = soup.find_all("td", {"class": "result_text"})
@@ -46,7 +47,7 @@ def getMovieResults(Id):
         r = requests.get(url)
     except requests.exceptions.RequestException as e:
         logging.info(e)
-        raise SystemExit(e)
+        traceback.print_exc(e)
 
     soup = BeautifulSoup(r.content, "html.parser")
     movie_details = soup.find("div", {"class": "plot_summary"})
