@@ -26,7 +26,7 @@ def getSearchResults(movie):
         return json_object
 
     for item in movies:
-        if not(item is None):
+        if item is not None:
             title = item.get_text().strip()
             url = item.find("a").get("href")
             Id = url[7:16]
@@ -76,43 +76,43 @@ def getMovieResults(Id):
 
     json_object = {}
 
-    if (title is not None):
+    if title is not None:
         json_object['Title'] = title.get_text().strip()
 
-    if (duration is not None):
+    if duration is not None:
         json_object['Duration'] = duration.get_text().strip()
 
-    if (release_date is not None):
+    if release_date is not None:
         json_object['ReleaseDate'] = release_date['content']
 
-    if (description is not None):
+    if description is not None:
         json_object['Description'] = description.get_text().strip()
 
-    if (director is not None):
+    if director is not None:
         directors = ""
         for item in director:
             directors = directors + item.get_text().strip() + ", "
         json_object['Directors'] = directors
 
-    if (genre is not None):
+    if genre is not None:
         genres = ""
         for item in genre:
             genres = genres + item.get_text().strip() + " "
         json_object['Genre'] = genres
 
-    if (writer is not None):
+    if writer is not None:
         writers = ""
         for item in writer:
             writers = writers + item.get_text().strip() + " "
         json_object['Writer'] = writers
 
-    if (actor is not None):
+    if actor is not None:
         actors = ""
         for item in actor:
             actors = actors + item.get_text().strip() + " "
         json_object['Actors'] = actors
 
-    if (rating is not None):
+    if rating is not None:
         json_object['Rating'] = rating.get_text().strip()
 
     return json_object
