@@ -14,7 +14,7 @@ import imdbScraper
 def search_movie(request):
 
     movie = request.GET.get('q', '')
-    movie_list = imdbScraper.getSearchResults(movie)
+    movie_list = imdbScraper.get_search_results(movie)
 
     if type(movie_list) is dict:
         data = json.dumps(movie_list)
@@ -45,7 +45,7 @@ def search_movie(request):
 def exact_movie(request):
 
     movie_id = request.GET.get('q', '')
-    data = imdbScraper.getMovieResults(movie_id)
+    data = imdbScraper.get_movie_results(movie_id)
     if 'Error' in data:
         status_code = 404
     else:

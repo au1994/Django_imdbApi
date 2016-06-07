@@ -5,7 +5,7 @@ import sys
 import traceback
 
 
-def getSearchResults(movie):
+def get_search_results(movie):
 
     url = "http://www.imdb.com/find?s=tt&q=" + movie
 
@@ -40,7 +40,7 @@ def getSearchResults(movie):
     return json_array
 
 
-def getMovieResults(Id):
+def get_movie_results(Id):
 
     url = "http://www.imdb.com/title/" + Id + "/?ref_=fn_al_tt_1"
     try:
