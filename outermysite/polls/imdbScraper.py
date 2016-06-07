@@ -1,8 +1,8 @@
+from bs4 import BeautifulSoup
+import logging
 import requests
 import sys
 import traceback
-from bs4 import BeautifulSoup
-import logging
 
 
 def getSearchResults(movie):

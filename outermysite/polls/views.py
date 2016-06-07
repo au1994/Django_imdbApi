@@ -1,12 +1,12 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from bs4 import BeautifulSoup
+from django.http import HttpResponse
+from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
+import pdb
 import requests
 import sys
 import traceback
-import pdb
 import imdbScraper
 
 
@@ -16,7 +16,6 @@ def search_movie(request):
     movie = request.GET.get('q', '')
     movie_list = imdbScraper.getSearchResults(movie)
 
-    print type(movie_list)
     if type(movie_list) is dict:
         data = json.dumps(movie_list)
         return HttpResponse(data,
@@ -45,8 +44,8 @@ def search_movie(request):
 
 def exact_movie(request):
 
-    Id = request.GET.get('q', '')
-    data = imdbScraper.getMovieResults(Id)
+    movie_id = request.GET.get('q', '')
+    data = imdbScraper.getMovieResults(movie_id)
     if 'Error' in data:
         status_code = 404
     else:
