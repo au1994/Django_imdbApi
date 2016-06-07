@@ -1,8 +1,10 @@
-from bs4 import BeautifulSoup
 import logging
-import requests
 import sys
 import traceback
+
+import requests
+
+from bs4 import BeautifulSoup
 
 
 def get_search_results(movie):
@@ -29,20 +31,20 @@ def get_search_results(movie):
         if item is not None:
             title = item.get_text().strip()
             url = item.find("a").get("href")
-            Id = url[7:16]
+            movie_id = url[7:16]
         url = "http://www.imdb.com" + url
         json_object = {}
         json_object['Title'] = title
         json_object['Url'] = url
-        json_object['Id'] = Id
+        json_object['Id'] = movie_id
         json_array.append(json_object)
 
     return json_array
 
 
-def get_movie_results(Id):
+def get_movie_results(movie_id):
 
-    url = "http://www.imdb.com/title/" + Id + "/?ref_=fn_al_tt_1"
+    url = "http://www.imdb.com/title/" + movie_id + "/?ref_=fn_al_tt_1"
     try:
         r = requests.get(url)
     except requests.exceptions.RequestException as e:
@@ -67,10 +69,8 @@ def get_movie_results(Id):
     title_details = soup.find("div", {"class": "title_wrapper"})
     title = title_details.find("h1", {"itemprop": "name"})
     duration = title_details.find("time", {"itemprop": "duration"})
-    release_date = title_details.find(
-        "meta",
-        {"itemprop": "datePublished"}
-    )
+    release_date = title_details.find("meta",
+                                      {"itemprop": "datePublished"})
 
     genre = title_details.find_all("span", {"itemprop": "genre"})
 

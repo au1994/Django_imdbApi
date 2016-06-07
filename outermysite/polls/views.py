@@ -1,13 +1,16 @@
+import json
+import pdb
+import sys
+import traceback
+
+import requests
+
+import imdbScraper
+
 from bs4 import BeautifulSoup
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import json
-import pdb
-import requests
-import sys
-import traceback
-import imdbScraper
 
 
 # Create your views here.
@@ -20,8 +23,7 @@ def search_movie(request):
         data = json.dumps(movie_list)
         return HttpResponse(data,
                             content_type='application/json',
-                            status=404
-                            )
+                            status=404)
 
     paginator = Paginator(movie_list, 20)
     page = request.GET.get('page')
@@ -53,5 +55,4 @@ def exact_movie(request):
     data = json.dumps(data)
     return HttpResponse(data,
                         content_type='application/json',
-                        status=status_code
-                        )
+                        status=status_code)
