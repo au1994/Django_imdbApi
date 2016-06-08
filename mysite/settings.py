@@ -24,7 +24,7 @@ PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = 'o_pynx&7@k%@+=8+&m68hv869x5krh-%m07u4pgip3s&dqq7pc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
