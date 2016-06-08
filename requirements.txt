@@ -1,4 +1,4 @@
-ngo==1.9.2
+Django==1.9.2
 BeautifulSoup4
 Requests
 gunicorn==19.4.5
