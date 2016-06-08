@@ -1,1 +1,1 @@
-web: cd outermysite && gunicorn mysite.wsgi --log-file -
+web: outermysite/ gunicorn mysite.wsgi --log-file -
