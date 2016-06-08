@@ -92,7 +92,7 @@ def get_movie_results(movie_id):
         directors = ""
         for item in director:
             directors = directors + item.get_text().strip() + ", "
-        json_object['directors'] = directors
+        json_object['director'] = directors
 
     if genre is not None:
         genres = ""
