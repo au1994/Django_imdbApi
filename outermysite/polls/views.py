@@ -44,9 +44,8 @@ def search_movie(request):
                         status=200)
 
 
-def exact_movie(request):
+def exact_movie(request, movie_id):
 
-    movie_id = request.GET.get('q', '')
     data = imdbScraper.get_movie_results(movie_id)
     if 'error' in data:
         status_code = 404
