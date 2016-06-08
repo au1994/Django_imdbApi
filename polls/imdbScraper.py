@@ -16,6 +16,9 @@ def get_search_results(movie):
     except requests.exceptions.RequestException as e:
         logging.info(e)
         traceback.print_exc(e)
+        json_object = {}
+        json_object['error'] = "Service unavailable"
+        return json_object
 
     soup = BeautifulSoup(r.content, "html.parser")
     movies = soup.find_all("td", {"class": "result_text"})
@@ -44,12 +47,15 @@ def get_search_results(movie):
 
 def get_movie_results(movie_id):
 
-    url = "http://www.imdb.com/title/" + movie_id + "/?ref_=fn_al_tt_1"
+    url = "http://www.imdb.com/title/" + movie_id
     try:
         r = requests.get(url)
     except requests.exceptions.RequestException as e:
         logging.info(e)
         traceback.print_exc(e)
+        json_object = {}
+        json_object['error'] = "Service unavailable"
+        return json_object
 
     soup = BeautifulSoup(r.content, "html.parser")
     movie_details = soup.find("div", {"class": "plot_summary"})

@@ -20,10 +20,14 @@ def search_movie(request):
     movie_list = imdbScraper.get_search_results(movie)
 
     if type(movie_list) is dict:
+        if "Service unavailable" in movie_list.values():
+            status_code = 503
+        else:
+            status_code = 404
         data = json.dumps(movie_list)
         return HttpResponse(data,
                             content_type='application/json',
-                            status=404)
+                            status=status_code)
 
     paginator = Paginator(movie_list, 20)
     page = request.GET.get('page')
@@ -35,7 +39,6 @@ def search_movie(request):
     except EmptyPage:
         movies = paginator.page(1)
 
-    # print type(movies)
     movies = movies.object_list
     data = json.dumps(movies)
 
@@ -48,7 +51,10 @@ def exact_movie(request, movie_id):
 
     data = imdbScraper.get_movie_results(movie_id)
     if 'error' in data:
-        status_code = 404
+        if "Service unavailable" in data.values():
+            status_code = 503
+        else:
+            status_code = 404
     else:
         status_code = 200
     data = json.dumps(data)
