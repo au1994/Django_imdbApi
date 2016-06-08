@@ -56,7 +56,6 @@ def get_movie_results(movie_id):
     json_array = []
 
     if movie_details is None:
-        print "No results found"
         json_object = {}
         json_object['error'] = "No results found"
         return json_object
