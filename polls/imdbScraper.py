@@ -18,7 +18,8 @@ def get_search_results(movie):
         traceback.print_exc(e)
         json_object = {}
         json_object['error'] = "Service unavailable"
-        return json_object
+        tup = (True, 503, json_object)
+        return tup
 
     soup = BeautifulSoup(r.content, "html.parser")
     movies = soup.find_all("td", {"class": "result_text"})
@@ -28,7 +29,8 @@ def get_search_results(movie):
     if len(movies) == 0:
         json_object = {}
         json_object['error'] = "No results found"
-        return json_object
+        tup = (True, 404, json_object)
+        return tup
 
     for item in movies:
         if item is not None:
@@ -42,7 +44,8 @@ def get_search_results(movie):
         json_object['id'] = movie_id
         json_array.append(json_object)
 
-    return json_array
+    tup = (False, 200, json_array)
+    return tup
 
 
 def get_movie_results(movie_id):
@@ -55,7 +58,8 @@ def get_movie_results(movie_id):
         traceback.print_exc(e)
         json_object = {}
         json_object['error'] = "Service unavailable"
-        return json_object
+        tup = (True, 503, json_object)
+        return tup
 
     soup = BeautifulSoup(r.content, "html.parser")
     movie_details = soup.find("div", {"class": "plot_summary"})
@@ -64,7 +68,8 @@ def get_movie_results(movie_id):
     if movie_details is None:
         json_object = {}
         json_object['error'] = "No results found"
-        return json_object
+        tup = (True, 404, json_object)
+        return tup
 
     description = movie_details.find("div", {"class": "summary_text"})
     director = movie_details.find_all("span", {"itemprop": "director"})
@@ -120,4 +125,5 @@ def get_movie_results(movie_id):
     if rating is not None:
         json_object['rating'] = rating.get_text().strip()
 
-    return json_object
+    tup = (False, 200, json_object)
+    return tup
